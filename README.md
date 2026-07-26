@@ -1,184 +1,60 @@
 # Indian Compounder Index (ICI)
 
-A production-ready Python platform for analyzing Indian listed companies and generating a composite investment index based on compounding metrics.
+## Project Overview
 
-## Overview
+The Indian Compounder Index (ICI) is a Python-based project scaffold for building a data pipeline around Indian listed companies, financial metrics, scoring logic, and reporting workflows. The repository is organized to support future development of extraction, transformation, validation, scoring, and report generation steps.
 
-ICI is designed to help investors and researchers:
-- Extract and aggregate financial data from Indian listed companies
-- Validate data quality and consistency
-- Calculate composite scoring metrics
-- Generate insights and reports on investment opportunities
-- Identify long-term wealth-building stocks
+## Objectives
 
-## Project Structure
+- Provide a clean and modular project structure for data-focused Python development.
+- Separate raw, processed, master, and source data assets clearly.
+- Support future implementation of validation, scoring, and reporting features.
+- Encourage Python best practices such as package organization, dependency management, and testing.
 
-```
+## Folder Structure
+
+```text
 ICI/
-├── config/                 # Configuration files
-├── data/                   # Data storage
-│   ├── raw/               # Original downloaded data
-│   ├── processed/         # Cleaned and processed data
-│   ├── master/            # Master reference data
-│   └── sources/           # Source definitions
-├── docs/                  # Documentation
-├── excel/                 # Excel outputs
-├── logs/                  # Application logs
-├── reports/               # Generated reports
-├── scripts/               # Data processing scripts
-│   ├── extract/           # Data extraction
-│   ├── transform/         # Data transformation
-│   ├── validate/          # Data validation
-│   ├── scoring/           # Scoring algorithms
-│   └── reports/           # Report generation
-├── tests/                 # Unit and integration tests
-├── ici/                   # Main Python package
-│   ├── __init__.py
-│   ├── config.py          # Path and directory configuration
-│   ├── settings.py        # Application settings
-│   ├── logger.py          # Logging configuration
-│   ├── cli.py             # Command-line interface
-│   └── utils.py           # Utility functions
-└── .github/
-    └── workflows/         # GitHub Actions workflows
+├── config/                  # Configuration files and environment settings
+├── data/
+│   ├── raw/                 # Raw ingested data
+│   ├── processed/           # Cleaned and transformed data
+│   ├── master/              # Master reference and lookup data
+│   └── sources/             # Metadata for external data sources
+├── docs/                    # Project documentation
+├── excel/                   # Excel export outputs
+├── logs/                    # Runtime and application logs
+├── reports/                 # Generated reports
+├── scripts/
+│   ├── extract/             # Data extraction scripts
+│   ├── transform/           # Data transformation scripts
+│   ├── validate/            # Data validation scripts
+│   ├── scoring/             # Scoring logic scripts
+│   └── reports/             # Report generation scripts
+├── tests/                   # Automated tests
+├── ici/                     # Main Python package
+├── .github/workflows/       # CI/CD workflow definitions
+└── README.md                # Project documentation
 ```
 
 ## Technology Stack
 
-- **Python 3.12**: Core language
-- **pandas**: Data manipulation and analysis
-- **openpyxl**: Excel file handling
-- **requests**: HTTP requests
-- **beautifulsoup4**: Web scraping
-- **lxml**: XML/HTML processing
-- **numpy**: Numerical computing
-- **matplotlib**: Data visualization
-- **pydantic**: Data validation
-- **typer**: CLI framework
-- **pytest**: Testing framework
-- **python-dotenv**: Environment variables
-
-## Installation
-
-### Prerequisites
-- Python 3.12 or higher
-- pip and virtualenv
-
-### Setup
-
-1. Clone the repository:
-```bash
-git clone https://github.com/MeghashyamChevur/ICI.git
-cd ICI
-```
-
-2. Create and activate virtual environment:
-```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-```
-
-3. Install dependencies:
-```bash
-pip install -r requirements.txt
-```
-
-4. Initialize the project:
-```bash
-python -m ici.cli init
-```
-
-## Usage
-
-### Command-Line Interface
-
-The ICI platform is controlled via the command-line interface:
-
-```bash
-# Initialize project structure and directories
-python -m ici.cli init
-
-# Collect data from sources
-python -m ici.cli collect
-
-# Validate collected data
-python -m ici.cli validate
-
-# Calculate scoring metrics
-python -m ici.cli score
-
-# Export processed data
-python -m ici.cli export
-
-# Generate comprehensive reports
-python -m ici.cli report
-```
-
-## Configuration
-
-Configuration is managed through:
-- `ici/settings.py`: Application-wide settings
-- `.env` file: Environment-specific variables (create from `.env.example`)
-- `config/`: Configuration files (YAML, JSON, etc.)
-
-## Logging
-
-All application logs are written to `logs/ici.log` with console output for real-time feedback.
-
-## Testing
-
-Run tests using pytest:
-
-```bash
-pytest                    # Run all tests
-pytest -v                # Verbose output
-pytest --cov            # With coverage report
-```
-
-Tests are automatically run on every push and pull request via GitHub Actions.
-
-## Development
-
-### Code Standards
-- Follows PEP 8 style guidelines
-- Type hints on all functions
-- Comprehensive docstrings
-- Unit tests for all modules
-
-### Contributing
-1. Create a feature branch
-2. Make your changes
-3. Write/update tests
-4. Submit a pull request
-
-## License
-
-This project is licensed under the MIT License - see LICENSE file for details.
-
-## Author
-
-Meghashyam Chevur
+- Python 3.10+
+- pandas for data manipulation
+- numpy for numerical operations
+- openpyxl for Excel support
+- requests and beautifulsoup4 for data collection
+- lxml for HTML and XML parsing
+- matplotlib for visualization support
+- pydantic for data validation
+- typer for CLI development
+- pytest for automated testing
+- python-dotenv for environment management
 
 ## Roadmap
 
-### Phase 1 (Current): Foundation
-- ✅ Project structure and CLI framework
-- ✅ Logging and configuration
-- ⏳ Data collection infrastructure
-- ⏳ Data validation framework
-
-### Phase 2: Core Features
-- Data extraction from multiple sources
-- Financial metrics calculation
-- Scoring algorithm implementation
-- Excel report generation
-
-### Phase 3: Advanced Features
-- Web dashboard
-- API endpoints
-- Real-time data updates
-- Advanced analytics
-
-## Support
-
-For issues, questions, or suggestions, please open an issue on GitHub.
+- Phase 1: Establish the project scaffold, package structure, and documentation.
+- Phase 2: Implement extraction and transformation pipelines for source data.
+- Phase 3: Introduce validation rules and quality checks.
+- Phase 4: Add scoring, reporting, and export workflows.
+- Phase 5: Expand automation with CI/CD and testing coverage.

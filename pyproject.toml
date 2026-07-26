@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ici"
+version = "0.1.0"
+description = "Indian Compounder Index project scaffold"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [
+  { name = "Meghashyam Chevur" }
+]
+license = { text = "MIT" }
+dependencies = [
+  "pandas>=2.2.0",
+  "numpy>=1.26.0",
+  "openpyxl>=3.1.0",
+  "requests>=2.31.0",
+  "beautifulsoup4>=4.48.0",
+  "lxml>=5.0.0",
+  "matplotlib>=3.8.0",
+  "pydantic>=2.8.0",
+  "typer>=0.12.0",
+  "pytest>=8.3.0",
+  "python-dotenv>=1.0.0"
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

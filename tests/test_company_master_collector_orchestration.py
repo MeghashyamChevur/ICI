@@ -10,8 +10,11 @@ from ici.models.company import Company
 
 
 class StubSource(CompanyMasterSource):
-    def fetch(self) -> dict[str, Any]:
+    def download(self) -> dict[str, Any]:
         return {"records": [{"symbol": "reliance", "company_name": "Reliance Industries"}]}
+
+    def fetch(self) -> dict[str, Any]:
+        return self.download()
 
 
 class StubParser(CompanyMasterParser):

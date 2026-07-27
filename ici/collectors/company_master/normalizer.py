@@ -25,6 +25,12 @@ class CompanyMasterNormalizer:
             exchange=self._normalize_exchange(company.exchange),
             listing_status=self._normalize_listing_status(company.listing_status),
             market_cap=company.market_cap,
+            market_cap_category=self._normalize_optional_text(company.market_cap_category),
+            listing_date=self._normalize_optional_text(company.listing_date),
+            face_value=company.face_value,
+            website=self._normalize_optional_text(company.website),
+            headquarters=self._normalize_optional_text(company.headquarters),
+            business_description=self._normalize_optional_text(company.business_description),
         )
 
     def _normalize_symbol(self, value: str) -> str:
@@ -52,7 +58,7 @@ class CompanyMasterNormalizer:
             return None
         normalized = str(value).strip().upper()
         if normalized in {"NSE", "BSE", "BOTH"}:
-            return normalized
+            return "NSE" if normalized == "NSE" else ("BSE" if normalized == "BSE" else "BOTH")
         if normalized in {"N", "NATIONAL STOCK EXCHANGE"}:
             return "NSE"
         if normalized in {"B", "BOMBAY STOCK EXCHANGE"}:

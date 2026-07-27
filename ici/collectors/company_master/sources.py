@@ -136,6 +136,19 @@ class FileCompanyMasterSource(CompanyMasterSource):
         return records
 
 
+class CompanyMasterSourceFactory:
+    """Create a CompanyMasterSource implementation by simple selector."""
+
+    def create(self, source_type: str, *, path: Path | None = None) -> CompanyMasterSource:
+        """Return a source instance for the requested implementation type."""
+        normalized = (source_type or "file").strip().lower()
+        if normalized == "nse":
+            return NseCompanyMasterSource()
+        if normalized == "file":
+            return FileCompanyMasterSource(path=path or Path("tests/data/company_master_sample.csv"))
+        raise ValueError(f"Unsupported company master source type: {source_type}")
+
+
 def get_default_company_master_source() -> CompanyMasterSource:
     """Return the default source implementation used by the collector."""
-    return FileCompanyMasterSource(path=Path("tests/data/company_master_sample.csv"))
+    return CompanyMasterSourceFactory().create("file")

@@ -11,12 +11,8 @@ class CompanyMasterParser:
     """Convert raw company master payloads into Company model instances."""
 
     def parse(self, payload: Any) -> list[Company]:
-        """Parse the payload into a list of Company objects.
+        """Parse the payload into a list of Company objects."""
 
-        The parser accepts placeholder payloads from the source layer and turns
-        each record into a Company instance without performing validation or
-        normalization beyond basic coercion.
-        """
         if not isinstance(payload, dict):
             return []
 
@@ -25,10 +21,13 @@ class CompanyMasterParser:
             return []
 
         companies: list[Company] = []
+
         for record in records:
             if not isinstance(record, dict):
                 continue
+
             companies.append(self._parse_record(record))
+
         return companies
 
     def _parse_record(self, record: dict[str, Any]) -> Company:
@@ -44,12 +43,19 @@ class CompanyMasterParser:
             exchange=record.get("exchange"),
             listing_status=record.get("listing_status"),
             market_cap=self._coerce_float(record.get("market_cap")),
+            market_cap_category=record.get("market_cap_category"),
+            listing_date=record.get("listing_date"),
+            face_value=self._coerce_float(record.get("face_value")),
+            website=record.get("website"),
+            headquarters=record.get("headquarters"),
+            business_description=record.get("business_description"),
         )
 
     def _coerce_float(self, value: Any) -> float | None:
         """Coerce a value to a float when possible."""
         if value in (None, ""):
             return None
+
         try:
             return float(value)
         except (TypeError, ValueError):

@@ -20,3 +20,9 @@ class Company:
     exchange: Optional[str] = None
     listing_status: Optional[str] = None
     market_cap: Optional[float] = None
+    market_cap_category: Optional[str] = None
+    listing_date: Optional[str] = None
+    face_value: Optional[float] = None
+    website: Optional[str] = None
+    headquarters: Optional[str] = None
+    business_description: Optional[str] = None

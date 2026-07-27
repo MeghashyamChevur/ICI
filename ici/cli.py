@@ -2,12 +2,28 @@
 
 from __future__ import annotations
 
+from pathlib import Path
+
 import typer
 
+from .collectors.company_master.collector import CompanyMasterCollector
+from .collectors.company_master.normalizer import CompanyMasterNormalizer
+from .collectors.company_master.parser import CompanyMasterParser
+from .collectors.company_master.persistence import CompanyMasterPersistence
+from .collectors.company_master.sources import FileCompanyMasterSource
+from .collectors.company_master.validator import CompanyMasterValidator
 from .logger import get_logger
 
 app = typer.Typer(help="Indian Compounder Index command-line interface")
 logger = get_logger("ici.cli")
+
+
+class _CliFileCompanyMasterSource(FileCompanyMasterSource):
+    """Adapt the file-backed source to the payload shape expected by the parser."""
+
+    def fetch(self) -> dict[str, list[dict[str, object]]]:
+        records = super().fetch()
+        return {"records": records}
 
 
 @app.command()
@@ -26,9 +42,27 @@ def status() -> None:
 
 @app.command()
 def collect() -> None:
-    """Collect data from configured sources."""
+    """Collect company master data from the sample dataset and write the output CSV."""
     logger.info("Running collect command")
-    typer.echo("Collect command placeholder: data collection workflow will be implemented later.")
+    typer.echo("Starting company master collection...")
+
+    source = _CliFileCompanyMasterSource(path=Path("tests/data/company_master_sample.csv"))
+    parser = CompanyMasterParser()
+    normalizer = CompanyMasterNormalizer()
+    validator = CompanyMasterValidator()
+    persistence = CompanyMasterPersistence(output_path=Path("reports/company_master.csv"))
+    collector = CompanyMasterCollector(
+        source=source,
+        parser=parser,
+        normalizer=normalizer,
+        persistence=persistence,
+        validator=validator,
+    )
+
+    companies = collector.collect()
+    typer.echo("Collection completed successfully.")
+    typer.echo(f"Companies collected: {len(companies)}")
+    typer.echo("Output: reports/company_master.csv")
 
 
 @app.command()

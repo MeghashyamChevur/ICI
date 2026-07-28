@@ -6,6 +6,7 @@ from typing import Dict, Type
 
 from .base import BaseCollector
 from .company_master import CompanyMasterCollector
+from .company_financials.collector import CompanyFinancialsCollector
 
 
 class CollectorRegistry:
@@ -31,6 +32,7 @@ class CollectorRegistry:
 
 _registry = CollectorRegistry()
 _registry.register(CompanyMasterCollector)
+_registry.register(CompanyFinancialsCollector)
 
 
 def get_registry() -> CollectorRegistry:

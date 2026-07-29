@@ -19,6 +19,7 @@ from .collectors.company_financials.parser import CompanyFinancialsParser
 from .collectors.company_financials.persistence import CompanyFinancialsPersistence
 from .collectors.company_financials.sources import FileCompanyFinancialsSource
 from .collectors.company_financials.validator import CompanyFinancialsValidator
+from .collectors.company_intelligence import CompanyIntelligenceCollector
 
 from .logger import get_logger
 
@@ -116,6 +117,25 @@ def collect_financials() -> None:
     typer.echo(f"Financial records collected: {len(financials)}")
     typer.echo("Output: reports/company_financials.csv")
 
+@app.command("collect-company-intelligence")
+def collect_company_intelligence() -> None:
+    """Build company intelligence by combining company and financial data."""
+    logger.info("Running collect-company-intelligence command")
+    typer.echo("Starting company intelligence collection...")
+
+    collector = CompanyIntelligenceCollector(
+        company_master_path=Path("reports/company_master.csv"),
+        company_financials_path=Path("reports/company_financials.csv"),
+        output_path=Path("reports/company_intelligence.json"),
+    )
+
+    intelligence = collector.collect()
+
+    typer.echo("Collection completed successfully.")
+    typer.echo(
+        f"Company intelligence records created: {len(intelligence)}"
+    )
+    typer.echo("Output: reports/company_intelligence.json")
 
 @app.command()
 def validate() -> None:

@@ -3,9 +3,11 @@
 from .company import Company
 from .company_financials import CompanyFinancials
 from .company_intelligence import CompanyIntelligence
+from .screening_result import ScreeningResult
 
 __all__ = [
     "Company",
     "CompanyFinancials",
     "CompanyIntelligence",
+    "ScreeningResult",
 ]

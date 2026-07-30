@@ -19,7 +19,9 @@ from .collectors.company_financials.parser import CompanyFinancialsParser
 from .collectors.company_financials.persistence import CompanyFinancialsPersistence
 from .collectors.company_financials.sources import FileCompanyFinancialsSource
 from .collectors.company_financials.validator import CompanyFinancialsValidator
+
 from .collectors.company_intelligence import CompanyIntelligenceCollector
+from .collectors.company_screening import CompanyScreeningCollector
 
 from .logger import get_logger
 
@@ -53,7 +55,9 @@ def init() -> None:
 def status() -> None:
     """Show the current project status."""
     logger.info("Running status command")
-    typer.echo("Status: project scaffold is configured and ready for future development.")
+    typer.echo(
+        "Status: project scaffold is configured and ready for future development."
+    )
 
 
 @app.command()
@@ -117,6 +121,7 @@ def collect_financials() -> None:
     typer.echo(f"Financial records collected: {len(financials)}")
     typer.echo("Output: reports/company_financials.csv")
 
+
 @app.command("collect-company-intelligence")
 def collect_company_intelligence() -> None:
     """Build company intelligence by combining company and financial data."""
@@ -136,6 +141,34 @@ def collect_company_intelligence() -> None:
         f"Company intelligence records created: {len(intelligence)}"
     )
     typer.echo("Output: reports/company_intelligence.json")
+
+
+@app.command("screen-companies")
+def screen_companies() -> None:
+    """Screen companies using company intelligence."""
+
+    logger.info("Running screen-companies command")
+    typer.echo("Starting company screening...")
+
+    collector = CompanyScreeningCollector(
+        company_intelligence_path=Path(
+            "reports/company_intelligence.json"
+        ),
+        output_path=Path(
+            "reports/screened_companies.json"
+        ),
+    )
+
+    companies = collector.collect()
+
+    typer.echo("Screening completed successfully.")
+    typer.echo(
+        f"Qualified companies found: {len(companies)}"
+    )
+    typer.echo(
+        "Output: reports/screened_companies.json"
+    )
+
 
 @app.command()
 def validate() -> None:

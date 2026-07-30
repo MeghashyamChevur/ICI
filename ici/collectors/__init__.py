@@ -4,6 +4,7 @@ from .base import BaseCollector
 from .company_master import CompanyMasterCollector
 from .registry import CollectorRegistry, get_registry
 from .company_financials.collector import CompanyFinancialsCollector
+from .company_ranking import CompanyRankingCollector
 from .company_intelligence import CompanyIntelligenceCollector
 
 __all__ = [
@@ -13,4 +14,5 @@ __all__ = [
     "CollectorRegistry",
     "get_registry",
     "CompanyIntelligenceCollector",
+    "CompanyRankingCollector",
 ]

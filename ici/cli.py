@@ -22,6 +22,7 @@ from .collectors.company_financials.validator import CompanyFinancialsValidator
 
 from .collectors.company_intelligence import CompanyIntelligenceCollector
 from .collectors.company_screening import CompanyScreeningCollector
+from .collectors.company_ranking import CompanyRankingCollector
 
 from .logger import get_logger
 
@@ -169,6 +170,31 @@ def screen_companies() -> None:
         "Output: reports/screened_companies.json"
     )
 
+@app.command("rank-companies")
+def rank_companies() -> None:
+    """Rank qualified companies."""
+
+    logger.info("Running rank-companies command")
+    typer.echo("Starting company ranking...")
+
+    collector = CompanyRankingCollector(
+        screened_companies_path=Path(
+            "reports/screened_companies.json"
+        ),
+        output_path=Path(
+            "reports/ranked_companies.json"
+        ),
+    )
+
+    companies = collector.collect()
+
+    typer.echo("Ranking completed successfully.")
+    typer.echo(
+        f"Ranked companies: {len(companies)}"
+    )
+    typer.echo(
+        "Output: reports/ranked_companies.json"
+    )
 
 @app.command()
 def validate() -> None:

@@ -22,7 +22,12 @@ from .collectors.company_financials.validator import CompanyFinancialsValidator
 
 from .collectors.company_intelligence import CompanyIntelligenceCollector
 from .collectors.company_screening import CompanyScreeningCollector
-from .collectors.company_ranking import CompanyRankingCollector
+from .collectors.company_ranking import (
+    CompanyRankingCollector,
+)
+from .collectors.investment_decision import (
+    InvestmentDecisionCollector,
+)
 
 from .logger import get_logger
 
@@ -195,7 +200,37 @@ def rank_companies() -> None:
     typer.echo(
         "Output: reports/ranked_companies.json"
     )
+@app.command("investment-decisions")
+def investment_decisions() -> None:
+    """Generate investment decisions for qualified companies."""
 
+    logger.info(
+        "Running investment-decisions command"
+    )
+    typer.echo(
+        "Starting investment decision analysis..."
+    )
+
+    collector = InvestmentDecisionCollector(
+        screened_companies_path=Path(
+            "reports/screened_companies.json"
+        ),
+        output_path=Path(
+            "reports/investment_decisions.json"
+        ),
+    )
+
+    companies = collector.collect()
+
+    typer.echo(
+        "Investment decision analysis completed successfully."
+    )
+    typer.echo(
+        f"Investment decisions generated: {len(companies)}"
+    )
+    typer.echo(
+        "Output: reports/investment_decisions.json"
+    )
 @app.command()
 def validate() -> None:
     """Validate collected data."""

@@ -12,8 +12,11 @@ class InvestmentResult:
     financial_strength_score: float
     shareholder_return_score: float
     grade: str
+    summary: str
     recommendation: str
     confidence: str
+    strengths: list[str]
+    weaknesses: list[str]
 
     def to_dict(self) -> dict[str, object]:
         """Convert the investment result to a dictionary."""
@@ -26,4 +29,7 @@ class InvestmentResult:
             "grade": self.grade,
             "recommendation": self.recommendation,
             "confidence": self.confidence,
+            "strengths": self.strengths,
+            "summary": self.summary,
+            "weaknesses": self.weaknesses,
         }
